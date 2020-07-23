@@ -7,6 +7,11 @@ var bg = document.querySelector(".bg");
 var live = document.querySelector(".live");
 var count = document.querySelector(".count")
 
+var endBox = document.querySelector(".end-box")
+var gameCount = document.querySelector(".game-count");
+var gameRe = document.querySelector(".game-repeat");
+var Return = document.querySelector(".return");
+
 
 //创建颜色和随机数
 var createRandom = function(num){
@@ -40,7 +45,7 @@ function create(num){
         div.innerHTML = current[i];
 
         
-        div.style.cssText = "position :absolute;left:"+((bgW-10)*createRandom()+bgLeft)+"px;top:"+createRandom(40)+"px;font-size:"+(30+createRandom(20))+"px;color:"+createColor();
+        div.style.cssText = "position :absolute;left:"+((bgW-10)*createRandom()+bgLeft)+"px;top:"+createRandom(40)+"px;font-size:"+(50+createRandom(30))+"px;color:"+createColor();
         
         document.body.appendChild(div);
         divs.push(div);
@@ -76,17 +81,17 @@ function gameStart(speed,num){
                 var live_count = parseInt(live.textContent.slice(5));
                 live.textContent = "live:"+(live_count-10);
                 if((live_count-10)<=0){
-                    
-                    //游戏结束
-                    var count_count = parseInt(count.textContent.slice(6));
-                    alert("游戏结束,分数为:"+count_count) 
                     for(var i=0;i<divs.length;i++){
                         divs[i].style.display = "none";
                         document.body.removeChild(divs[i]);
                     }
 
                     divs=[]
-                    box.style.display = "block";
+                    //游戏结束
+                    var count_count = parseInt(count.textContent.slice(6));
+                    gameCount.innerHTML = "分数为:"+count_count; 
+                    countBox.style.display = "none";
+                    endBox.style.display = "block";
 
                     clearInterval(t);    
                 }else{  
@@ -128,17 +133,31 @@ diffBtn.onclick = function(){
     box.style.display = "none";
     lavelBox.style.display = "block";
 }
-// 选择难度后的开始游戏
+//初始界面开始游戏
 start.onclick = function(){
     var speed=5;
     var num=4;
     gameStart(speed,num);
 }
-
+// 选择难度后的开始游戏
 startTwo.onclick = function(){
     var num  =  parseInt(document.myform.num.value);
     var speed = parseInt(document.myform.speed.value);
     console.log(num,speed);
     lavelBox.style.display="none";
     gameStart(speed,num);
+}
+//重新开始
+
+gameRe.onclick = function(){
+    endBox.style.display = "none";
+    var speed=5;
+    var num=4;
+    gameStart(speed,num);
+}
+
+//返回初始页面
+Return.onclick = function(){
+    endBox.style.display = "none";
+    box.style.display = "block";
 }
