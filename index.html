@@ -97,7 +97,7 @@
         }
         .count-box{
             width: 150px;
-            height: 100px;
+            height: 200px;
             position: absolute;
             background: #ccc;
             opacity: 0.5;
@@ -107,13 +107,14 @@
             right: 0;
 
         }
-        .live{
+        .live,.speed-count,.num-count{
             margin: auto;
             width: 150px;
             height: 50px;
             background: #aaa;
             line-height: 50px;
             cursor: pointer;
+            transition: all 1s ease;
         }
 
         .count{
@@ -170,6 +171,8 @@
             margin-top: 10px;
         }
 
+        
+
 
 
 
@@ -179,6 +182,7 @@
 </head>
 <body>
     <div class="bg">
+        
 
         <!-- 游戏开始界面 -->
         <div class="box">
@@ -217,6 +221,12 @@
         </div>
         <!-- 分数牌 -->
         <div class="count-box">
+            <div class="speed-count">
+
+            </div>
+            <div class="num-count">
+
+            </div>
             <div class="live">
             </div>
             <div class="count">

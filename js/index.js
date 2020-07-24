@@ -11,7 +11,10 @@ var endBox = document.querySelector(".end-box")
 var gameCount = document.querySelector(".game-count");
 var gameRe = document.querySelector(".game-repeat");
 var Return = document.querySelector(".return");
+var speedCount = document.querySelector(".speed-count")
+var numCount = document.querySelector(".num-count")
 
+var grand = 0;
 
 //创建颜色和随机数
 var createRandom = function(num){
@@ -26,7 +29,9 @@ var createColor = function(){
 }
 
 
-var letters=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+// var letters=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+
+var letters=[{letter:"A",img:"imgs/A.png"},{letter:"B",img:"imgs/B.png"},{letter:"C",img:"imgs/C.png"},{letter:"D",img:"imgs/D.png"},{letter:"E",img:"imgs/E.png"},{letter:"F",img:"imgs/F.png"},{letter:"G",img:"imgs/G.png"},{letter:"H",img:"imgs/H.png"},{letter:"I",img:"imgs/I.png"},{letter:"J",img:"imgs/J.png"},{letter:"K",img:"imgs/K.png"},{letter:"L",img:"imgs/L.png"},{letter:"M",img:"imgs/M.png"},{letter:"N",img:"imgs/N.png"},{letter:"O",img:"imgs/O.png"},{letter:"P",img:"imgs/P.png"},{letter:"Q",img:"imgs/Q.png"},{letter:"R",img:"imgs/R.png"},{letter:"S",img:"imgs/S.png"},{letter:"T",img:"imgs/T.png"},{letter:"U",img:"imgs/U.png"},{letter:"V",img:"imgs/V.png"},{letter:"W",img:"imgs/W.png"},{letter:"X",img:"imgs/X.png"},{letter:"Y",img:"imgs/Y.png"},{letter:"Z",img:"imgs/Z.png"}]
 var le_length = letters.length;
 var divs = [];    
 //屏幕的宽高
@@ -42,10 +47,10 @@ function create(num){
     }
     for(var i=0;i<current.length;i++){
         var div = document.createElement("div");
-        div.innerHTML = current[i];
-
+        div.innerHTML = "<img src="+current[i].img+">";
+        div.setAttribute("letter",current[i].letter)
         
-        div.style.cssText = "position :absolute;left:"+((bgW-10)*createRandom()+bgLeft)+"px;top:"+createRandom(40)+"px;font-size:"+(50+createRandom(30))+"px;color:"+createColor();
+        div.style.cssText = "position :absolute;left:"+((bgW-70)*createRandom()+bgLeft)+"px;top:"+createRandom(60)+"px;width:100%,height:100%";
         
         document.body.appendChild(div);
         divs.push(div);
@@ -64,6 +69,8 @@ function gameStart(speed,num){
 
     box.style.display = "none";
     countBox.style.display = "block";
+    speedCount.textContent = "speed:"+speed;
+    numCount.textContent = "num:"+num;
     live.textContent = "live:100"
     count.textContent = "count:0"
     create(num);
@@ -72,14 +79,16 @@ function gameStart(speed,num){
     //游戏开始之后 ,取消掉字母，分数加10分，一个字母没有被取消 ，生命值扣10，低于100分游戏结束
 
     var t = setInterval(function(){
-        for(var i=0;i<divs.length;i++){
+        for(var i=0;i<divs.length;i++){ 
             divs[i].style.top = divs[i].offsetTop+speed+"px";
-            
             //判断是否消失到屏幕下面  //扣分并创造新的
-            if(parseInt(divs[i].style.top)>(bg.offsetHeight+bg.offsetTop-divs[i].offsetHeight)){
+            if(parseInt(divs[i].style.top)>(bg.offsetHeight-divs[i].offsetHeight)){
+
                 divs[i].style.display = "none";    
                 var live_count = parseInt(live.textContent.slice(5));
                 live.textContent = "live:"+(live_count-10);
+                divs.splice(i,1);
+
                 if((live_count-10)<=0){
                     for(var i=0;i<divs.length;i++){
                         divs[i].style.display = "none";
@@ -94,31 +103,55 @@ function gameStart(speed,num){
                     endBox.style.display = "block";
 
                     clearInterval(t);    
-                }else{  
+                }else{
+                    
                     create(1)
+                    
                 }
             }
+            
         }
+        
     },50)
-
-
-    //判断数字和得分
+    
+    
     document.onkeydown = function(ev){
-        var letter = String.fromCharCode(ev.keyCode);
+        var getLetter = String.fromCharCode(ev.keyCode);
         for(var i=0;i<divs.length;i++){
-            if(divs[i].innerHTML==letter){
+            if(divs[i].getAttribute("letter")==getLetter){
+                divs[i].style.display = "none";
                 document.body.removeChild(divs[i]);
                 divs.splice(i,1);
                 var count_count = parseInt(count.textContent.slice(6));
                 count.textContent = "count:"+(count_count+10);
+                grand+=10;
+                if(grand==50){
+                    var rand = createRandom();
+                    if(rand<0.55){
+                        num+=1;
+                        numCount.textContent="num:"+num;
+                        create(1);
+                        grand =0;
+                        speedCount.style.background = "#aaa";
+                        numCount.style.background = "orange";
+                    }else{
+                        speed+=1;
+                        speedCount.textContent = "speed:"+speed;
+                        grand=0;
+                        speedCount.style.background = "orange";
+                        numCount.style.background = "#aaa";
+                    }
+                }
                 create(1);
                 break;
             }
-
             
         }
+        
     }
 }
+//判断数字和得分
+    
 
 
 var startTwo = document.querySelector(".start-two");
