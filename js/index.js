@@ -31,7 +31,7 @@ var createColor = function(){
 
 // var letters=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 
-var letters=[{letter:"A",img:"imgs/A.png"},{letter:"B",img:"imgs/B.png"},{letter:"C",img:"imgs/C.png"},{letter:"D",img:"imgs/D.png"},{letter:"E",img:"imgs/E.png"},{letter:"F",img:"imgs/F.png"},{letter:"G",img:"imgs/G.png"},{letter:"H",img:"imgs/H.png"},{letter:"I",img:"imgs/I.png"},{letter:"J",img:"imgs/J.png"},{letter:"K",img:"imgs/K.png"},{letter:"L",img:"imgs/L.png"},{letter:"M",img:"imgs/M.png"},{letter:"N",img:"imgs/N.png"},{letter:"O",img:"imgs/O.png"},{letter:"P",img:"imgs/P.png"},{letter:"Q",img:"imgs/Q.png"},{letter:"R",img:"imgs/R.png"},{letter:"S",img:"imgs/S.png"},{letter:"T",img:"imgs/T.png"},{letter:"U",img:"imgs/U.png"},{letter:"V",img:"imgs/V.png"},{letter:"W",img:"imgs/W.png"},{letter:"X",img:"imgs/X.png"},{letter:"Y",img:"imgs/Y.png"},{letter:"Z",img:"imgs/Z.png"}]
+var letters=[{letter:"A",img:"imgs/A.gif"},{letter:"B",img:"imgs/B.gif"},{letter:"C",img:"imgs/C.gif"},{letter:"D",img:"imgs/D.gif"},{letter:"E",img:"imgs/E.gif"},{letter:"F",img:"imgs/F.gif"},{letter:"G",img:"imgs/G.gif"},{letter:"H",img:"imgs/H.gif"},{letter:"I",img:"imgs/I.gif"},{letter:"J",img:"imgs/J.gif"},{letter:"K",img:"imgs/K.gif"},{letter:"L",img:"imgs/L.gif"},{letter:"M",img:"imgs/M.gif"},{letter:"N",img:"imgs/N.gif"},{letter:"O",img:"imgs/O.gif"},{letter:"P",img:"imgs/P.gif"},{letter:"Q",img:"imgs/Q.gif"},{letter:"R",img:"imgs/R.gif"},{letter:"S",img:"imgs/S.gif"},{letter:"T",img:"imgs/T.gif"},{letter:"U",img:"imgs/U.gif"},{letter:"V",img:"imgs/V.gif"},{letter:"W",img:"imgs/W.gif"},{letter:"X",img:"imgs/X.gif"},{letter:"Y",img:"imgs/Y.gif"},{letter:"Z",img:"imgs/Z.gif"}]
 var le_length = letters.length;
 var divs = [];    
 //屏幕的宽高
@@ -47,11 +47,11 @@ function create(num){
     }
     for(var i=0;i<current.length;i++){
         var div = document.createElement("div");
-        div.innerHTML = "<img src="+current[i].img+">";
+        
         div.setAttribute("letter",current[i].letter)
         
-        div.style.cssText = "position :absolute;left:"+((bgW-70)*createRandom()+bgLeft)+"px;top:"+createRandom(60)+"px;width:100%,height:100%";
-        
+        div.style.cssText = "position :absolute;left:"+((bgW-70)*createRandom()+bgLeft)+"px;top:"+createRandom(60)+"px;width:60px,height:60px";
+        div.innerHTML = "<img src="+current[i].img+" style='width:60px;height:60px'>";
         document.body.appendChild(div);
         divs.push(div);
     }
